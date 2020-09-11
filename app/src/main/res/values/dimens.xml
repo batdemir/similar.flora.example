@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="root_padding">4sp</dimen>
+    <dimen name="margin">4sp</dimen>
+</resources>
