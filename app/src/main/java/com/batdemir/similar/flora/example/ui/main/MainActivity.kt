@@ -8,6 +8,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.batdemir.similar.flora.example.R
 import com.batdemir.similar.flora.example.app.MyApplication
+import com.batdemir.similar.flora.example.di.component.MainComponent
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import javax.inject.Inject
 
@@ -15,13 +16,14 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var mainViewModel: MainViewModel
+    lateinit var mainComponent: MainComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (applicationContext as MyApplication)
+        mainComponent = (applicationContext as MyApplication)
             .applicationComponent
             .mainComponent()
             .create()
-            .inject(this)
+        mainComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)

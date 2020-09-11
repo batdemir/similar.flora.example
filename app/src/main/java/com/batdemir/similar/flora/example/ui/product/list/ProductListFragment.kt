@@ -5,30 +5,68 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
-import com.batdemir.similar.flora.example.R
+import androidx.lifecycle.Observer
+import com.batdemir.similar.flora.example.databinding.ProductListFragmentBinding
+import com.batdemir.similar.flora.example.model.ProductModel
+import com.batdemir.similar.flora.example.ui.main.MainActivity
+import com.batdemir.similar.flora.example.ui.main.MainViewModel
+import com.batdemir.similar.flora.example.utils.Resource
 import javax.inject.Inject
 
-class ProductListFragment : Fragment() {
-    companion object {
-        fun newInstance() = ProductListFragment()
-    }
-
+class ProductListFragment : Fragment(), ProductListAdapter.ProductItemListener {
     @Inject
     lateinit var viewModel: ProductListViewModel
+
+    @Inject
+    lateinit var mainViewModel: MainViewModel
+
+    lateinit var binding: ProductListFragmentBinding
+    lateinit var adapter: ProductListAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.product_list_fragment, container, false)
+        binding = ProductListFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(ProductListViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onAttach(context: Context) {
+        (requireActivity() as MainActivity).mainComponent.productComponent().create().inject(this)
+        super.onAttach(context)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+        setupObservers()
+    }
+
+    private fun setupRecyclerView() {
+        adapter = ProductListAdapter(this)
+        binding.recyclerView.adapter = adapter
+    }
+
+    private fun setupObservers() {
+        viewModel.products.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                Resource.Status.SUCCESS -> {
+                    binding.progressBar.visibility = View.GONE
+                    if (!it.data?.result?.data?.products.isNullOrEmpty()) adapter.setItems(it.data?.result?.data?.products!!)
+                }
+                Resource.Status.ERROR ->
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+
+                Resource.Status.LOADING ->
+                    binding.progressBar.visibility = View.VISIBLE
+            }
+        })
+    }
+
+    override fun onClicked(model: ProductModel) {
+        TODO("Not yet implemented")
+    }
 }

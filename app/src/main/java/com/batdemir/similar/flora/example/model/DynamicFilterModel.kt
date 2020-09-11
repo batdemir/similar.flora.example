@@ -5,5 +5,5 @@ data class DynamicFilterModel(
     val name: String,
     val sequence: Int,
     val filterType: Int,
-    val values: List<DynamicFilterValuesModel>
+    val values: ArrayList<DynamicFilterValuesModel>
 )

@@ -1,54 +1,73 @@
 package com.batdemir.similar.flora.example.ui.product.list
 
-import android.app.Activity
-import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.batdemir.similar.flora.example.databinding.ItemProductBinding
 import com.batdemir.similar.flora.example.model.ProductModel
+import com.bumptech.glide.Glide
 
+class ProductListAdapter(private val listener: ProductItemListener) :
+    RecyclerView.Adapter<ProductViewHolder>() {
 
-class RecyclerViewAdapter(var context: Activity, private val models: List<ProductModel>) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private lateinit var binding : ItemProductBinding
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        binding = ItemProductBinding.inflate(context.layoutInflater,parent,false)
-        return ProductListViewHolder(binding)
+    interface ProductItemListener {
+        fun onClicked(model: ProductModel)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val model: ProductModel = models[position]
-        val viewHolder = holder as ProductListViewHolder
-        viewHolder.setData(model)
-    }
+    private val items = ArrayList<ProductModel>()
 
-    override fun getItemCount(): Int {
-        return models.size
-    }
-
-    internal inner class ProductListViewHolder(private val binding: ItemProductBinding) :
-        RecyclerView.ViewHolder(binding.root),
-        View.OnClickListener {
-        lateinit var productionModel: ProductModel
-
-        fun setData(productModel: ProductModel) {
-            this.productionModel = productModel
-            binding.textViewEditProductName.text = productionModel.name
-            binding.textViewEditProductProperty.text = productionModel.deliveryBadgeText
-            binding.textViewEditProductDiscount.text =
-                String.format("%.2f", productionModel.price.discountPercentage)
-            binding.textViewEditProductOldPrice.text =
-                String.format("%.2f", productionModel.price.old)
-            binding.textViewEditProductPrice.text =
-                String.format("%.2f", productionModel.price.current)
-            binding.textViewEditProductCommentCount.text =
-                String.format("%.2f", productionModel.reviewRating)
-            binding.textViewEditProductInstallment.text = productionModel.installmentText
+    fun setItems(items: ArrayList<ProductModel>) {
+        this.items.clear()
+        for ((i, item) in items.withIndex()) {
+            this.items.add(item)
+            notifyItemInserted(i)
         }
+    }
 
-        override fun onClick(v: View?) {
-            //Not implemented.
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
+        val binding: ItemProductBinding =
+            ItemProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ProductViewHolder(binding, listener)
+    }
+
+    override fun getItemCount(): Int = items.size
+
+    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) =
+        holder.bind(items[position])
+}
+
+class ProductViewHolder(
+    private val binding: ItemProductBinding,
+    private val listener: ProductListAdapter.ProductItemListener
+) : RecyclerView.ViewHolder(binding.root),
+    View.OnClickListener {
+
+    private lateinit var item: ProductModel
+
+    init {
+        binding.root.setOnClickListener(this)
+    }
+
+    fun bind(item: ProductModel) {
+        this.item = item
+        binding.textViewEditProductName.text = item.name
+        binding.textViewEditProductProperty.text = item.deliveryBadgeText
+        binding.textViewEditProductDiscount.text =
+            String.format("%d", item.price.discountPercentage)
+        binding.textViewEditProductOldPrice.text =
+            String.format("%.2f", item.price.old.toDouble())
+        binding.textViewEditProductPrice.text =
+            String.format("%.2f", item.price.current.toDouble())
+        binding.textViewEditProductCommentCount.text =
+            String.format("%.2f", item.reviewRating.toDouble())
+        binding.textViewEditProductInstallment.text = item.installmentText
+        Glide.with(binding.root)
+            .load(item.smallImage)
+            .into(binding.imageViewEditProduct)
+    }
+
+    override fun onClick(v: View?) {
+        listener.onClicked(item)
     }
 }
