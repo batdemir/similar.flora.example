@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.batdemir.similar.flora.example.R
 import com.batdemir.similar.flora.example.databinding.ProductListFragmentBinding
 import com.batdemir.similar.flora.example.model.ProductModel
 import com.batdemir.similar.flora.example.ui.main.MainActivity
@@ -15,16 +16,18 @@ import com.batdemir.similar.flora.example.ui.main.MainViewModel
 import com.batdemir.similar.flora.example.utils.Resource
 import javax.inject.Inject
 
-class ProductListFragment : Fragment(), ProductListAdapter.ProductItemListener {
+
+class ProductListFragment :
+    Fragment(),
+    ProductListAdapter.ProductItemListener {
     @Inject
     lateinit var viewModel: ProductListViewModel
 
     @Inject
     lateinit var mainViewModel: MainViewModel
 
-    lateinit var binding: ProductListFragmentBinding
-    lateinit var adapter: ProductListAdapter
-
+    private lateinit var binding: ProductListFragmentBinding
+    private lateinit var adapter: ProductListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +46,7 @@ class ProductListFragment : Fragment(), ProductListAdapter.ProductItemListener {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setupObservers()
+        setupListeners()
     }
 
     private fun setupRecyclerView() {
@@ -51,12 +55,13 @@ class ProductListFragment : Fragment(), ProductListAdapter.ProductItemListener {
     }
 
     private fun setupObservers() {
-        viewModel.products.observe(viewLifecycleOwner, Observer {
+        viewModel.products.observe(viewLifecycleOwner, {
             when (it.status) {
                 Resource.Status.SUCCESS -> {
                     binding.progressBar.visibility = View.GONE
                     if (!it.data?.result?.data?.products.isNullOrEmpty()) adapter.setItems(it.data?.result?.data?.products!!)
                 }
+
                 Resource.Status.ERROR ->
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
 
@@ -66,7 +71,21 @@ class ProductListFragment : Fragment(), ProductListAdapter.ProductItemListener {
         })
     }
 
+    private fun setupListeners() {
+        binding.btnSearch.setOnClickListener {
+            Toast.makeText(
+                context,
+                "Not supported",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        binding.btnFilter.setOnClickListener {
+            findNavController().navigate(R.id.navigation_product_filter)
+        }
+    }
+
     override fun onClicked(model: ProductModel) {
-        TODO("Not yet implemented")
+        findNavController().navigate(R.id.navigation_product)
     }
 }

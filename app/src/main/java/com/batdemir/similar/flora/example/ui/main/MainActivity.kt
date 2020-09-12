@@ -1,6 +1,7 @@
 package com.batdemir.similar.flora.example.ui.main
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -32,8 +33,7 @@ class MainActivity : AppCompatActivity() {
         val navController = navHosFragment.navController
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_products,
-                R.id.navigation_settings
+                R.id.navigation_products
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

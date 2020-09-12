@@ -6,7 +6,8 @@ import com.batdemir.similar.flora.example.di.component.ApplicationComponent
 import com.batdemir.similar.flora.example.di.component.DaggerApplicationComponent
 import timber.log.Timber
 
-class MyApplication : Application() {
+class MyApplication :
+    Application() {
     val applicationComponent: ApplicationComponent by lazy {
         DaggerApplicationComponent.factory().create(applicationContext)
     }

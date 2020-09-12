@@ -1,6 +1,5 @@
 package com.batdemir.similar.flora.example.ui.product.detail
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +10,6 @@ import com.batdemir.similar.flora.example.R
 import javax.inject.Inject
 
 class ProductFragment : Fragment() {
-    companion object {
-        fun newInstance() = ProductFragment()
-    }
-
     @Inject
     lateinit var viewModel: ProductViewModel
 

@@ -5,7 +5,6 @@ import retrofit2.Response
 import timber.log.Timber
 
 abstract class BaseDataSource {
-
     protected suspend fun <T> getResult(call: suspend () -> Response<T>): Resource<T> {
         try {
             val response = call()
@@ -23,5 +22,4 @@ abstract class BaseDataSource {
         Timber.d(message)
         return Resource.error("Network call has failed for a following reason: $message")
     }
-
 }

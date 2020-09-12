@@ -9,7 +9,7 @@ import com.batdemir.similar.flora.example.model.ProductModel
 import com.bumptech.glide.Glide
 
 class ProductListAdapter(private val listener: ProductItemListener) :
-    RecyclerView.Adapter<ProductViewHolder>() {
+    RecyclerView.Adapter<ProductListAdapter.ProductViewHolder>() {
 
     interface ProductItemListener {
         fun onClicked(model: ProductModel)
@@ -19,10 +19,8 @@ class ProductListAdapter(private val listener: ProductItemListener) :
 
     fun setItems(items: ArrayList<ProductModel>) {
         this.items.clear()
-        for ((i, item) in items.withIndex()) {
-            this.items.add(item)
-            notifyItemInserted(i)
-        }
+        this.items.addAll(items)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -35,39 +33,39 @@ class ProductListAdapter(private val listener: ProductItemListener) :
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) =
         holder.bind(items[position])
-}
 
-class ProductViewHolder(
-    private val binding: ItemProductBinding,
-    private val listener: ProductListAdapter.ProductItemListener
-) : RecyclerView.ViewHolder(binding.root),
-    View.OnClickListener {
+    inner class ProductViewHolder(
+        private val binding: ItemProductBinding,
+        private val listener: ProductListAdapter.ProductItemListener
+    ) : RecyclerView.ViewHolder(binding.root),
+        View.OnClickListener {
 
-    private lateinit var item: ProductModel
+        private lateinit var item: ProductModel
 
-    init {
-        binding.root.setOnClickListener(this)
-    }
+        init {
+            binding.root.setOnClickListener(this)
+        }
 
-    fun bind(item: ProductModel) {
-        this.item = item
-        binding.textViewEditProductName.text = item.name
-        binding.textViewEditProductProperty.text = item.deliveryBadgeText
-        binding.textViewEditProductDiscount.text =
-            String.format("%d", item.price.discountPercentage)
-        binding.textViewEditProductOldPrice.text =
-            String.format("%.2f", item.price.old.toDouble())
-        binding.textViewEditProductPrice.text =
-            String.format("%.2f", item.price.current.toDouble())
-        binding.textViewEditProductCommentCount.text =
-            String.format("%.2f", item.reviewRating.toDouble())
-        binding.textViewEditProductInstallment.text = item.installmentText
-        Glide.with(binding.root)
-            .load(item.smallImage)
-            .into(binding.imageViewEditProduct)
-    }
+        fun bind(item: ProductModel) {
+            this.item = item
+            binding.textViewEditProductName.text = item.name
+            binding.textViewEditProductProperty.text = item.deliveryBadgeText
+            binding.textViewEditProductDiscount.text =
+                String.format("%d", item.price.discountPercentage)
+            binding.textViewEditProductOldPrice.text =
+                String.format("%.2f", item.price.old.toDouble())
+            binding.textViewEditProductPrice.text =
+                String.format("%.2f", item.price.current.toDouble())
+            binding.textViewEditProductCommentCount.text =
+                String.format("%.2f", item.reviewRating.toDouble())
+            binding.textViewEditProductInstallment.text = item.installmentText
+            Glide.with(binding.root)
+                .load(item.smallImage)
+                .into(binding.imageViewEditProduct)
+        }
 
-    override fun onClick(v: View?) {
-        listener.onClicked(item)
+        override fun onClick(v: View?) {
+            listener.onClicked(item)
+        }
     }
 }

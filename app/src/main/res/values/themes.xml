@@ -4,6 +4,11 @@
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/secondaryColor</item>
+        <item name="android:colorPrimary">@color/primaryColor</item>
+        <item name="android:colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="android:colorSecondary">@color/secondaryColor</item>
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+        <item name="android:textColorSecondary">@color/secondaryColor</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:configChanges">keyboardHidden|orientation|screenSize</item>
         <item name="android:windowSoftInputMode">stateAlwaysHidden</item>
