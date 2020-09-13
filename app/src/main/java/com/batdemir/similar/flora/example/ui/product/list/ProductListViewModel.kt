@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.batdemir.similar.flora.example.repo.ProductRepository
 import javax.inject.Inject
 
-class ProductListViewModel @Inject constructor(productRepository: ProductRepository) :
+class ProductListViewModel @Inject constructor() :
     ViewModel() {
-    val products = productRepository.getProducts()
 }

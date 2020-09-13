@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.batdemir.similar.flora.example.R
 import com.batdemir.similar.flora.example.databinding.ItemFilterDetailBinding
 import com.batdemir.similar.flora.example.model.DynamicFilterValuesModel
 import java.util.stream.Collectors
@@ -63,10 +64,23 @@ class ProductFilterDetailAdapter(private val listener: ProductFilterDetailItemLi
         fun bind(item: DynamicFilterValuesModel) {
             this.item = item
             binding.textViewEditFilterDetailName.text = item.name
+            binding.rootItemFilterDetail.isSelected = item.selected
+            changeRootBackground()
         }
 
         override fun onClick(v: View?) {
+            binding.rootItemFilterDetail.isSelected = !binding.rootItemFilterDetail.isSelected
+            changeRootBackground()
             listener.onClicked(item)
+        }
+
+        private fun changeRootBackground() {
+            binding.rootItemFilterDetail.setBackgroundColor(
+                if (binding.rootItemFilterDetail.isSelected)
+                    binding.root.context.getColor(R.color.green)
+                else
+                    binding.root.context.getColor(android.R.color.white)
+            )
         }
     }
 }

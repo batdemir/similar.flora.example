@@ -8,49 +8,33 @@
     <fragment
         android:id="@+id/navigation_products"
         android:name="com.batdemir.similar.flora.example.ui.product.list.ProductListFragment"
-        android:label="Products"
+        android:label="@string/products"
         tools:layout="@layout/product_list_fragment">
         <action
             android:id="@+id/filter_action"
-            app:destination="@id/navigation_product_filter"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/navigation_product_filter" />
         <action
             android:id="@+id/detail_action"
-            app:destination="@id/navigation_product"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/navigation_product" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_product_filter"
         android:name="com.batdemir.similar.flora.example.ui.product.filter.ProductFilterFragment"
-        android:label="Products"
+        android:label="@string/filter"
         tools:layout="@layout/product_filter_fragment">
         <action
-            android:id="@+id/action_navigation_product_filter_self"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_in_left"
-            app:popUpTo="@id/navigation_products" />
+            android:id="@+id/action_navigation_product_filter_to_navigation_products"
+            app:destination="@id/navigation_products" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_product"
         android:name="com.batdemir.similar.flora.example.ui.product.detail.ProductFragment"
-        android:label="Products"
+        android:label="@string/product"
         tools:layout="@layout/product_fragment">
         <action
-            android:id="@+id/action_navigation_product_self"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_in_left"
-            app:popUpTo="@id/navigation_products" />
+            android:id="@+id/action_navigation_product_to_navigation_products"
+            app:destination="@id/navigation_products" />
     </fragment>
 </navigation>

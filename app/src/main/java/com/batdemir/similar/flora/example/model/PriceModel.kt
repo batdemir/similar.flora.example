@@ -1,5 +1,7 @@
 package com.batdemir.similar.flora.example.model
 
+import java.io.Serializable
+
 data class PriceModel(
     val current: Number,
     val old: Number,
@@ -12,4 +14,4 @@ data class PriceModel(
     val subscriptionPrice: Number,
     val showCurrencyCode: Boolean,
     val showDecimalPart: Boolean
-)
+) : Serializable

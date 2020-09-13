@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">similar.flora.example</string>
+    <string name="filter">Filitre</string>
+    <string name="search">Arama</string>
+    <string name="show_all">Tümünü Göster</string>
+    <string name="buy">Satın Al</string>
+    <string name="not_supported">Desteklenmiyor.</string>
+    <string name="products">Ürünler</string>
+    <string name="product">Ürün</string>
+</resources>

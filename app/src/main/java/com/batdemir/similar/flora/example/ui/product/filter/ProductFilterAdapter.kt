@@ -1,13 +1,15 @@
 package com.batdemir.similar.flora.example.ui.product.filter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.batdemir.similar.flora.example.databinding.ItemFilterBinding
 import com.batdemir.similar.flora.example.model.DynamicFilterModel
 import com.batdemir.similar.flora.example.model.DynamicFilterValuesModel
 
-class ProductFilterAdapter() :
+class ProductFilterAdapter(private val listener: ProductFilterDetailAdapter.ProductFilterDetailItemListener) :
     RecyclerView.Adapter<ProductFilterAdapter.ProductFilterViewHolder>() {
 
     private val items = ArrayList<DynamicFilterModel>()
@@ -41,11 +43,18 @@ class ProductFilterAdapter() :
             val adapter: ProductFilterDetailAdapter = ProductFilterDetailAdapter(object :
                 ProductFilterDetailAdapter.ProductFilterDetailItemListener {
                 override fun onClicked(model: DynamicFilterValuesModel) {
-                    TODO("Not yet implemented")
+                    listener.onClicked(model)
                 }
             })
             binding.recyclerViewFilterDetail.adapter = adapter
             adapter.setItems(item.values, false)
+            if (item.values.size == 3)
+                binding.recyclerViewFilterDetail.layoutManager =
+                    GridLayoutManager(binding.root.context, 3)
+            if (item.values.size > 3)
+                binding.btnShowAll.visibility = View.VISIBLE
+            else
+                binding.btnShowAll.visibility = View.GONE
             binding.recyclerViewFilterDetail.setItemViewCacheSize(item.values.size)
             binding.btnShowAll.setOnClickListener {
                 it.isSelected = !it.isSelected

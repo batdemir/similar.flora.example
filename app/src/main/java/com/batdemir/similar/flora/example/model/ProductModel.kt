@@ -1,5 +1,7 @@
 package com.batdemir.similar.flora.example.model
 
+import java.io.Serializable
+
 data class ProductModel(
     val id: Long,
     val code: String,
@@ -32,4 +34,4 @@ data class ProductModel(
     val information: String,
     val isSubscription: Boolean,
     val productType: Int
-)
+) : Serializable

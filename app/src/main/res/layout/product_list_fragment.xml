@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/root_padding"
+    android:background="@color/primaryDarkColor"
     tools:context=".ui.product.list.ProductListFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,9 +18,11 @@
             android:layout_width="0sp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin"
-            android:text="Search"
+            android:text="@string/search"
             android:textAlignment="textStart"
             app:icon="@drawable/ic_search"
+            android:textColor="@color/primaryDarkColor"
+            app:iconTint="@color/green"
             app:layout_constraintBottom_toTopOf="@id/recycler_view"
             app:layout_constraintEnd_toStartOf="@id/btn_filter"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,9 +33,11 @@
             android:layout_width="wrap_content"
             android:layout_height="0sp"
             android:layout_margin="@dimen/margin"
-            android:text="Filter"
+            android:text="@string/filter"
             android:textAlignment="textStart"
+            android:textColor="@color/primaryDarkColor"
             app:icon="@drawable/ic_filter"
+            app:iconTint="@color/green"
             app:layout_constraintBottom_toTopOf="@id/recycler_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_search"

@@ -8,4 +8,12 @@ class ProductRepository @Inject constructor(private val remoteDataSource: Produc
     fun getProducts() = performGetOperation(
         networkCall = { remoteDataSource.getProducts() }
     )
+
+    fun getProducts(
+        detailList: List<Long>,
+        checkList: List<Long>,
+        priceList: List<Long>
+    ) = performGetOperation(
+        networkCall = { remoteDataSource.getProducts(detailList, checkList, priceList) }
+    )
 }

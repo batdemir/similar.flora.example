@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.batdemir.similar.flora.example.R
@@ -55,7 +56,7 @@ class ProductListFragment :
     }
 
     private fun setupObservers() {
-        viewModel.products.observe(viewLifecycleOwner, {
+        mainViewModel.getProducts().observe(viewLifecycleOwner, {
             when (it.status) {
                 Resource.Status.SUCCESS -> {
                     binding.progressBar.visibility = View.GONE
@@ -75,17 +76,26 @@ class ProductListFragment :
         binding.btnSearch.setOnClickListener {
             Toast.makeText(
                 context,
-                "Not supported",
+                getString(R.string.not_supported),
                 Toast.LENGTH_SHORT
             ).show()
         }
 
         binding.btnFilter.setOnClickListener {
-            findNavController().navigate(R.id.navigation_product_filter)
+            findNavController().navigate(
+                R.id.navigation_product_filter,
+                null,
+                mainViewModel.navOptions
+            )
         }
     }
 
     override fun onClicked(model: ProductModel) {
-        findNavController().navigate(R.id.navigation_product)
+        val bundle = bundleOf("productArg" to model)
+        findNavController().navigate(
+            R.id.navigation_product,
+            bundle,
+            mainViewModel.navOptions
+        )
     }
 }

@@ -5,6 +5,7 @@
     android:id="@+id/rootItemFilter"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/primaryDarkColor"
     android:layout_margin="@dimen/margin">
 
     <com.google.android.material.textview.MaterialTextView
@@ -36,7 +37,7 @@
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tümünü Göster"
+        android:text="@string/show_all"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recycler_view_filter_detail" />

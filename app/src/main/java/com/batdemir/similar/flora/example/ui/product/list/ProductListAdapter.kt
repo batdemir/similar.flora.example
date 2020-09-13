@@ -50,10 +50,16 @@ class ProductListAdapter(private val listener: ProductItemListener) :
             this.item = item
             binding.textViewEditProductName.text = item.name
             binding.textViewEditProductProperty.text = item.deliveryBadgeText
-            binding.textViewEditProductDiscount.text =
-                String.format("%d", item.price.discountPercentage)
-            binding.textViewEditProductOldPrice.text =
-                String.format("%.2f", item.price.old.toDouble())
+            if (item.price.discountPercentage == 0)
+                binding.textViewEditProductDiscount.visibility = View.GONE
+            else
+                binding.textViewEditProductDiscount.text =
+                    String.format("%d", item.price.discountPercentage)
+            if (item.price.old.toDouble() == 0.00)
+                binding.textViewEditProductOldPrice.visibility = View.GONE
+            else
+                binding.textViewEditProductOldPrice.text =
+                    String.format("%.2f", item.price.old.toDouble())
             binding.textViewEditProductPrice.text =
                 String.format("%.2f", item.price.current.toDouble())
             binding.textViewEditProductCommentCount.text =

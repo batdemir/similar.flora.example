@@ -3,5 +3,5 @@
     <item
         android:id="@+id/navigation_products"
         android:icon="@drawable/ic_home"
-        android:title="Products" />
+        android:title="@string/products" />
 </menu>

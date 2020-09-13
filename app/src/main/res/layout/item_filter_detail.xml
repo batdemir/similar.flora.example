@@ -13,6 +13,7 @@
         android:id="@+id/text_view_edit_filter_detail_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:gravity="center" />
 
 </com.google.android.material.card.MaterialCardView>

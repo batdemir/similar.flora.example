@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">similar.flora.example</string>
+    <string name="filter">Filter</string>
+    <string name="search">Search</string>
+    <string name="show_all">Show All</string>
+    <string name="buy">Buy</string>
+    <string name="not_supported">Not supported</string>
+    <string name="products">Products</string>
+    <string name="product">Product</string>
 </resources>

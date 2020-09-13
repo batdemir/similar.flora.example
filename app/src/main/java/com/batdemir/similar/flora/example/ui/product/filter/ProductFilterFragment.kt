@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.batdemir.similar.flora.example.databinding.ProductFilterFragmentBinding
+import com.batdemir.similar.flora.example.model.DynamicFilterValuesModel
 import com.batdemir.similar.flora.example.ui.main.MainActivity
 import com.batdemir.similar.flora.example.ui.main.MainViewModel
 import com.batdemir.similar.flora.example.ui.product.list.ProductListViewModel
@@ -16,7 +16,8 @@ import com.batdemir.similar.flora.example.utils.Resource
 import javax.inject.Inject
 
 class ProductFilterFragment :
-    Fragment() {
+    Fragment(),
+    ProductFilterDetailAdapter.ProductFilterDetailItemListener {
     @Inject
     lateinit var viewModel: ProductFilterViewModel
 
@@ -46,15 +47,16 @@ class ProductFilterFragment :
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setupObservers()
+        setupListener()
     }
 
     private fun setupRecyclerView() {
-        adapter = ProductFilterAdapter()
+        adapter = ProductFilterAdapter(this)
         binding.recyclerView.adapter = adapter
     }
 
     private fun setupObservers() {
-        productListViewModel.products.observe(viewLifecycleOwner, {
+        mainViewModel.getProducts().observe(viewLifecycleOwner, {
             when (it.status) {
                 Resource.Status.SUCCESS -> {
                     binding.progressBar.visibility = View.GONE
@@ -71,5 +73,15 @@ class ProductFilterFragment :
                     binding.progressBar.visibility = View.VISIBLE
             }
         })
+    }
+
+    private fun setupListener() {
+        binding.btnFilter.setOnClickListener {
+            viewModel.doFilter()
+        }
+    }
+
+    override fun onClicked(model: DynamicFilterValuesModel) {
+        viewModel.crudFilter(model)
     }
 }
