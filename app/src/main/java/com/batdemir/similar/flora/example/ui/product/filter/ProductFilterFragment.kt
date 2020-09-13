@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.batdemir.similar.flora.example.databinding.ProductFilterFragmentBinding
 import com.batdemir.similar.flora.example.model.DynamicFilterValuesModel
 import com.batdemir.similar.flora.example.ui.main.MainActivity
@@ -56,13 +57,14 @@ class ProductFilterFragment :
     }
 
     private fun setupObservers() {
-        mainViewModel.getProducts().observe(viewLifecycleOwner, {
+        mainViewModel.getProducts(false).observe(viewLifecycleOwner, {
             when (it.status) {
                 Resource.Status.SUCCESS -> {
                     binding.progressBar.visibility = View.GONE
                     if (!it.data?.result?.data?.products.isNullOrEmpty()) {
                         adapter.setItems(it.data?.result?.data?.mainFilter?.dynamicFilter!!)
                         binding.recyclerView.setItemViewCacheSize(adapter.itemCount)
+                        viewModel.setFilter(adapter.getItems())
                     }
                 }
 
@@ -78,6 +80,7 @@ class ProductFilterFragment :
     private fun setupListener() {
         binding.btnFilter.setOnClickListener {
             viewModel.doFilter()
+            findNavController().popBackStack()
         }
     }
 

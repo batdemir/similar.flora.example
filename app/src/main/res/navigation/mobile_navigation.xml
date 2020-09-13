@@ -25,7 +25,7 @@
         tools:layout="@layout/product_filter_fragment">
         <action
             android:id="@+id/action_navigation_product_filter_to_navigation_products"
-            app:destination="@id/navigation_products" />
+            app:popUpTo="@id/navigation_products" />
     </fragment>
 
     <fragment
@@ -35,6 +35,6 @@
         tools:layout="@layout/product_fragment">
         <action
             android:id="@+id/action_navigation_product_to_navigation_products"
-            app:destination="@id/navigation_products" />
+            app:popUpTo="@id/navigation_products" />
     </fragment>
 </navigation>

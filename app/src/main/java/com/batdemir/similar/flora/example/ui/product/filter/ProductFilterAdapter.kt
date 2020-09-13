@@ -20,6 +20,10 @@ class ProductFilterAdapter(private val listener: ProductFilterDetailAdapter.Prod
         notifyDataSetChanged()
     }
 
+    fun getItems(): ArrayList<DynamicFilterModel> {
+        return items
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductFilterViewHolder {
         val binding: ItemFilterBinding =
             ItemFilterBinding.inflate(LayoutInflater.from(parent.context), parent, false)

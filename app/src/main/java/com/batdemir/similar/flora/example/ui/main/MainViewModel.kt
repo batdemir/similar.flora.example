@@ -26,8 +26,8 @@ class MainViewModel @Inject constructor(private val productRepository: ProductRe
         private var products: LiveData<Resource<ResponseModel<DataModel>>>? = null
     }
 
-    fun getProducts(): LiveData<Resource<ResponseModel<DataModel>>> {
-        if (products == null)
+    fun getProducts(requireRestart: Boolean): LiveData<Resource<ResponseModel<DataModel>>> {
+        if (products == null || requireRestart)
             products = productRepository.getProducts()
         return products!!
     }

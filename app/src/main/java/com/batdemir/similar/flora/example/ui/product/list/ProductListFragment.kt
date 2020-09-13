@@ -56,7 +56,7 @@ class ProductListFragment :
     }
 
     private fun setupObservers() {
-        mainViewModel.getProducts().observe(viewLifecycleOwner, {
+        mainViewModel.getProducts(false).observe(viewLifecycleOwner, {
             when (it.status) {
                 Resource.Status.SUCCESS -> {
                     binding.progressBar.visibility = View.GONE
