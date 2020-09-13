@@ -35,3 +35,7 @@ Jetpack is a suite of libraries to help developers follow best practices, reduce
   - LiveData
   - ViewModel
   - Navigation
+## Tech Info
+  - Android Studio Version 4.0.1
+  - Gradle Version 4.0.1
+  - Kotlin Version 1.4.10
